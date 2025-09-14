@@ -50,9 +50,6 @@ It helps LLM-based systems **forget smartly, remember what matters, and reduce t
 │ Vector DB (optional)│ (Pinecone / Weaviate / Chroma / pgvector)
 └───────────────────────┘
 
-yaml
-Copy code
-
 ---
 
 ## 🚀 Quickstart
@@ -61,12 +58,12 @@ Copy code
 ```bash
 git clone https://github.com/your-org/memorizer.git
 cd memorizer
-2. Set up environment
+### 2. Set up environment
 Copy the example .env file and update it with your credentials:
 
-bash
-Copy code
+
 cp .env.example .env
+
 You’ll need:
 
 OPENAI_API_KEY (or other LLM provider key)
@@ -75,19 +72,18 @@ DATABASE_URL (Postgres connection string)
 
 Optional vector DB API keys (e.g. Pinecone)
 
-3. Install dependencies
+### 3. Install dependencies
 bash
 Copy code
 pip install -r requirements.txt
-4. Run database migrations
+### 4. Run database migrations
 bash
 Copy code
 python scripts/init_db.py
-5. Try a local demo
-bash
-Copy code
+### 5. Try a local demo
+
 python demo.py
-🔧 Example: E-commerce AI Assistant
+## 🔧 Example: E-commerce AI Assistant
 Memorizer can back an e-commerce assistant:
 
 Very new memory: Last 5 support chats (“Where is my order?”)
@@ -104,7 +100,7 @@ Uses hybrid retrieval: keyword search for “refund”, vector fallback for olde
 
 Responds with awareness of customer history, without blowing up tokens.
 
-🛠️ Tech Stack
+## 🛠️ Tech Stack
 Core: Python 3.10+, Postgres (with JSONB)
 
 Vector DB options: Pinecone, Weaviate, Chroma, pgvector
@@ -113,7 +109,7 @@ LLM compression: OpenAI (gpt-4o-mini) by default, pluggable with local or third-
 
 Frameworks: Ready for integration with LangChain, LlamaIndex, or standalone
 
-📂 Repository Structure
+## 📂 Repository Structure
 bash
 Copy code
 src/
@@ -140,7 +136,7 @@ requirements.txt
 
  Example apps (E-commerce, CRM, Knowledge Assistant)
 
-🤝 Contributing
+## 🤝 Contributing
 Contributions are welcome! Please open an issue or submit a PR if you’d like to:
 
 Add vector DB connectors
@@ -149,9 +145,6 @@ Improve compression strategies
 
 Provide more example use cases
 
-📜 License
+## 📜 License
 Apache License 2.0.
 See LICENSE for details.
-
-yaml
-Copy code
