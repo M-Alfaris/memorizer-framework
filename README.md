@@ -58,6 +58,7 @@ It helps LLM-based systems **forget smartly, remember what matters, and reduce t
 ```bash
 git clone https://github.com/your-org/memorizer.git
 cd memorizer
+```
 ### 2. Set up environment
 Copy the example .env file and update it with your credentials:
 
