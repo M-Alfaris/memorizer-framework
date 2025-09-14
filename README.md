@@ -31,24 +31,26 @@ It helps LLM-based systems **forget smartly, remember what matters, and reduce t
 
 ## 🏗️ Architecture
 
+```
 ┌───────────────────────┐
-│ Very New Memory │ (raw sessions: up to 10 days / N sessions)
+│     Very New Memory   │ (raw sessions: up to 10 days / N sessions)
 └─────────┬─────────────┘
-│ move/compress
-▼
+          │ move/compress
+          ▼
 ┌───────────────────────┐
-│ Mid-Term Memory │ (summaries of last 12 months, trimmed text)
+│    Mid-Term Memory    │ (summaries of last 12 months, trimmed text)
 └─────────┬─────────────┘
-│ aggregate
-▼
+          │ aggregate
+          ▼
 ┌───────────────────────┐
-│ Long-Term Memory │ (aggregated briefs <1k chars, stats, prefs)
+│   Long-Term Memory    │ (aggregated briefs <1k chars, stats, prefs)
 └─────────┬─────────────┘
-│ fallback for deep recall
-▼
+          │ fallback for deep recall
+          ▼
 ┌───────────────────────┐
-│ Vector DB (optional)│ (Pinecone / Weaviate / Chroma / pgvector)
+│   Vector DB (optional)│ (Pinecone / Weaviate / Chroma / pgvector)
 └───────────────────────┘
+```
 
 ---
 
@@ -59,60 +61,63 @@ It helps LLM-based systems **forget smartly, remember what matters, and reduce t
 git clone https://github.com/your-org/memorizer.git
 cd memorizer
 ```
+
 ### 2. Set up environment
 Copy the example .env file and update it with your credentials:
 
-
+```bash
 cp .env.example .env
+```
 
-You’ll need:
-
-OPENAI_API_KEY (or other LLM provider key)
-
-DATABASE_URL (Postgres connection string)
-
-Optional vector DB API keys (e.g. Pinecone)
+You'll need:
+- `OPENAI_API_KEY` (or other LLM provider key)
+- `DATABASE_URL` (Postgres connection string)
+- Optional vector DB API keys (e.g. Pinecone)
 
 ### 3. Install dependencies
-bash
-Copy code
+```bash
 pip install -r requirements.txt
-### 4. Run database migrations
-bash
-Copy code
-python scripts/init_db.py
-### 5. Try a local demo
+```
 
+### 4. Run database migrations
+```bash
+python scripts/init_db.py
+```
+
+### 5. Try a local demo
+```bash
 python demo.py
+```
+
+---
+
 ## 🔧 Example: E-commerce AI Assistant
+
 Memorizer can back an e-commerce assistant:
 
-Very new memory: Last 5 support chats (“Where is my order?”)
-
-Mid-term memory: Summarized chat history (“Customer had 12 refund requests in 2024”)
-
-Long-term memory: Aggregated insights (“Customer prefers express shipping, positive sentiment about product quality, negative about delivery speed”)
+- **Very new memory**: Last 5 support chats ("Where is my order?")
+- **Mid-term memory**: Summarized chat history ("Customer had 12 refund requests in 2024")
+- **Long-term memory**: Aggregated insights ("Customer prefers express shipping, positive sentiment about product quality, negative about delivery speed")
 
 When the customer chats again:
+1. Assistant retrieves relevant context from Memorizer.
+2. Uses hybrid retrieval: keyword search for "refund", vector fallback for older "delivery delay" issues.
+3. Responds with awareness of customer history, without blowing up tokens.
 
-Assistant retrieves relevant context from Memorizer.
-
-Uses hybrid retrieval: keyword search for “refund”, vector fallback for older “delivery delay” issues.
-
-Responds with awareness of customer history, without blowing up tokens.
+---
 
 ## 🛠️ Tech Stack
-Core: Python 3.10+, Postgres (with JSONB)
 
-Vector DB options: Pinecone, Weaviate, Chroma, pgvector
+- **Core**: Python 3.10+, Postgres (with JSONB)
+- **Vector DB options**: Pinecone, Weaviate, Chroma, pgvector
+- **LLM compression**: OpenAI (gpt-4o-mini) by default, pluggable with local or third-party LLMs
+- **Frameworks**: Ready for integration with LangChain, LlamaIndex, or standalone
 
-LLM compression: OpenAI (gpt-4o-mini) by default, pluggable with local or third-party LLMs
-
-Frameworks: Ready for integration with LangChain, LlamaIndex, or standalone
+---
 
 ## 📂 Repository Structure
-bash
-Copy code
+
+```
 src/
   db.py                # Database schema + queries
   memory_manager.py    # Orchestration of memory lifecycle
@@ -124,28 +129,32 @@ scripts/
   init_db.py           # Create tables, run migrations
 .env.example           # Environment variables
 requirements.txt
-📊 Roadmap
- LangChain + LlamaIndex adapters
+```
 
- Provenance metadata (why was something kept/removed?)
+---
 
- Audit logging + RBAC hooks
+## 📊 Roadmap
 
- Declarative compression policies (rules before LLM summarization)
+- [ ] LangChain + LlamaIndex adapters
+- [ ] Provenance metadata (why was something kept/removed?)
+- [ ] Audit logging + RBAC hooks
+- [ ] Declarative compression policies (rules before LLM summarization)
+- [ ] Monitoring & metrics (memory growth, retrieval latency, token savings)
+- [ ] Example apps (E-commerce, CRM, Knowledge Assistant)
 
- Monitoring & metrics (memory growth, retrieval latency, token savings)
-
- Example apps (E-commerce, CRM, Knowledge Assistant)
+---
 
 ## 🤝 Contributing
-Contributions are welcome! Please open an issue or submit a PR if you’d like to:
 
-Add vector DB connectors
+Contributions are welcome! Please open an issue or submit a PR if you'd like to:
 
-Improve compression strategies
+- Add vector DB connectors
+- Improve compression strategies
+- Provide more example use cases
 
-Provide more example use cases
+---
 
 ## 📜 License
-Apache License 2.0.
-See LICENSE for details.
+
+Apache License 2.0.  
+See [LICENSE](./LICENSE) for details.
